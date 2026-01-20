@@ -14,6 +14,11 @@ from utils.data_processor import (
     low_performing_products
 )
 
+from utils.api_handler import (
+    fetch_all_products,
+    create_product_mapping
+)
+
 def main():
     raw_data = read_sales_file("data/sales_data.txt")
 
@@ -29,6 +34,10 @@ def main():
     print("Daily Sales Trend:\n", daily_sales_trend(valid_transactions))
     print("Peak Sales Day:\n", find_peak_sales_day(valid_transactions))
     print("Low Performing Products:\n", low_performing_products(valid_transactions))
+
+    products = fetch_all_products()
+    print(products)
+    print(create_product_mapping(products))
 
 if __name__ == "__main__":
     main()
