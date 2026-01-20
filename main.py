@@ -11,7 +11,8 @@ from utils.data_processor import (
     customer_analysis,
     daily_sales_trend,
     find_peak_sales_day,
-    low_performing_products
+    low_performing_products,
+    generate_sales_report
 )
 
 from utils.api_handler import (
@@ -41,6 +42,8 @@ def main():
     product_mapping = create_product_mapping(products)
     enriched_data = enrich_sales_data(valid_transactions, product_mapping)
     save_enriched_data(enriched_data)
+
+    generate_sales_report(valid_transactions, enriched_data)
 
 if __name__ == "__main__":
     main()

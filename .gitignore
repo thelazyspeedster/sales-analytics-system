@@ -3,3 +3,9 @@ utils/__pycache__
 
 # Virtual environment
 .venv/
+
+# Data created at during execution
+data/enriched_sales_data.txt
+
+# Output exclusive to User
+output/
