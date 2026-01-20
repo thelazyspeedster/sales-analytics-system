@@ -119,3 +119,88 @@ def customer_analysis(transactions):
     )
 
     return sorted_customers
+
+def daily_sales_trend(transactions):
+    """
+    Analyzes sales trends by date
+    """
+    daily_data = defaultdict(lambda: {
+        "revenue": 0.0,
+        "transaction_count": 0,
+        "unique_customers": set()
+    })
+
+    for t in transactions:
+        date = t["Date"]
+        revenue = t["Quantity"] * t["UnitPrice"]
+
+        daily_data[date]["revenue"] += revenue
+        daily_data[date]["transaction_count"] += 1
+        daily_data[date]["unique_customers"].add(t["CustomerID"])
+
+    # Final formatting & sort by date
+    formatted_data = {}
+
+    for date in sorted(daily_data.keys()):
+        formatted_data[date] = {
+            "revenue": round(daily_data[date]["revenue"], 2),
+            "transaction_count": daily_data[date]["transaction_count"],
+            "unique_customers": len(daily_data[date]["unique_customers"])
+        }
+
+    return formatted_data
+
+def find_peak_sales_day(transactions):
+    """
+    Identifies the date with highest revenue
+    """
+    daily_revenue = defaultdict(lambda: {
+        "revenue": 0.0,
+        "transaction_count": 0
+    })
+
+    for t in transactions:
+        date = t["Date"]
+        revenue = t["Quantity"] * t["UnitPrice"]
+
+        daily_revenue[date]["revenue"] += revenue
+        daily_revenue[date]["transaction_count"] += 1
+
+    peak_day = max(
+        daily_revenue.items(),
+        key=lambda x: x[1]["revenue"]
+    )
+
+    return (
+        peak_day[0],
+        round(peak_day[1]["revenue"], 2),
+        peak_day[1]["transaction_count"]
+    )
+
+def low_performing_products(transactions, threshold=10):
+    """
+    Identifies products with low sales
+    """
+    product_data = defaultdict(lambda: {
+        "quantity": 0,
+        "revenue": 0.0
+    })
+
+    for t in transactions:
+        product = t["ProductName"]
+        qty = t["Quantity"]
+        revenue = qty * t["UnitPrice"]
+
+        product_data[product]["quantity"] += qty
+        product_data[product]["revenue"] += revenue
+
+    low_products = [
+        (product, data["quantity"], round(data["revenue"], 2))
+        for product, data in product_data.items()
+        if data["quantity"] < threshold
+    ]
+
+    return sorted(
+        low_products,
+        key=lambda x: x[1]
+    )

@@ -8,7 +8,10 @@ from utils.data_processor import (
     calculate_total_revenue,
     region_wise_sales,
     top_selling_products,
-    customer_analysis
+    customer_analysis,
+    daily_sales_trend,
+    find_peak_sales_day,
+    low_performing_products
 )
 
 def main():
@@ -23,6 +26,9 @@ def main():
     print("Region-wise Sales:\n", region_wise_sales(valid_transactions))
     print("Top Selling Products:\n", top_selling_products(valid_transactions))
     print("Customer Purchase Analysis:\n", customer_analysis(valid_transactions))
+    print("Daily Sales Trend:\n", daily_sales_trend(valid_transactions))
+    print("Peak Sales Day:\n", find_peak_sales_day(valid_transactions))
+    print("Low Performing Products:\n", low_performing_products(valid_transactions))
 
 if __name__ == "__main__":
     main()
