@@ -16,7 +16,9 @@ from utils.data_processor import (
 
 from utils.api_handler import (
     fetch_all_products,
-    create_product_mapping
+    create_product_mapping,
+    enrich_sales_data,
+    save_enriched_data
 )
 
 def main():
@@ -36,8 +38,9 @@ def main():
     print("Low Performing Products:\n", low_performing_products(valid_transactions))
 
     products = fetch_all_products()
-    print(products)
-    print(create_product_mapping(products))
+    product_mapping = create_product_mapping(products)
+    enriched_data = enrich_sales_data(valid_transactions, product_mapping)
+    save_enriched_data(enriched_data)
 
 if __name__ == "__main__":
     main()
